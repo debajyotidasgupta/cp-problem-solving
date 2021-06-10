@@ -25,7 +25,7 @@ using namespace __gnu_pbds;
 #define ms(v, x) memset((v), x, sizeof((v)))
 #define chmin(a, b) (a) = min((a), (b))
 #define chmax(a, b) (a) = max((a), (b))
-#define vread(a) trav(iter, a) cin >> iter
+#define vread(v) trav(iter, v) cin >> iter
 #define RND                                                                      \
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); \
     std::mt19937 g(seed);
@@ -131,6 +131,42 @@ struct fen
     }
 };
 
+void solve()
+{
+    int n;
+    cin >> n;
+    vi b(n);
+    vread(b);
+
+    set<int> s = {b[0]};
+    fra(i, 1, n - 1)
+    {
+        if (b[i - 1] != b[i])
+        {
+            if (b[i] > b[i - 1])
+            {
+                auto it = s.upper_bound(b[i - 1]);
+                if (it != s.end() and *it < b[i])
+                {
+                    cout << "NO\n";
+                    return;
+                }
+            }
+            else
+            {
+                auto it = s.lower_bound(b[i - 1]);
+                if (it != s.begin() and *prev(it) > b[i])
+                {
+                    cout << "NO\n";
+                    return;
+                }
+            }
+        }
+        s.insert(b[i]);
+    }
+    cout << "YES\n";
+}
+
 int32_t main()
 {
     ios_base::sync_with_stdio(false);
@@ -139,4 +175,6 @@ int32_t main()
 
     int t = 1;
     cin >> t;
+    while (t--)
+        solve();
 }

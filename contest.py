@@ -28,7 +28,9 @@ if permitted:
 
     for i in problems:
         _id, name = i.find('div', class_='title').text.split('. ')
-        name = name.strip(' ').replace(' ', '_')
+        name = name.strip(' ').replace(
+            ' ', '_').replace('(', '_').replace(')', '_')
+        print(f'Scraping Problem {_id}')
 
         sub_path = f'{path}/{_id}'
         os.system(f'mkdir {sub_path}')
@@ -49,7 +51,7 @@ if permitted:
 
             with open(f'{sub_path}/Output{CaseNum}', 'w') as f:
                 Output = Output.strip().strip('\n')
-                f.write(Output)
+                f.write(Output+'\n')
 
         # testScript = ''
         # with open('test.cpp', 'w') as f:
@@ -57,3 +59,4 @@ if permitted:
         # os.system('g++ -O3 test.cpp -o test')
         # os.system(f'mv test {sub_path}/test')
         # os.system(f'rm test.cpp')
+print('Done')

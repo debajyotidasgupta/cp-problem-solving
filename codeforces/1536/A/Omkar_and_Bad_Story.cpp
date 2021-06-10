@@ -25,7 +25,7 @@ using namespace __gnu_pbds;
 #define ms(v, x) memset((v), x, sizeof((v)))
 #define chmin(a, b) (a) = min((a), (b))
 #define chmax(a, b) (a) = max((a), (b))
-#define vread(a) trav(iter, a) cin >> iter
+#define vread(v) trav(iter, a) cin >> iter
 #define RND                                                                      \
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); \
     std::mt19937 g(seed);
@@ -139,4 +139,23 @@ int32_t main()
 
     int t = 1;
     cin >> t;
+    while (t--)
+    {
+        int n;
+        read(n);
+        vi a(n);
+        vread(a);
+
+        if (find_if(all(a), [](int x)
+                    { return x < 0; }) == a.end())
+        {
+            cout << "Yes\n";
+            int mx = *max_element(all(a));
+            print(mx + 1);
+            fr(i, mx) cout << i << ' ';
+            print();
+        }
+        else
+            cout << "No\n";
+    }
 }
